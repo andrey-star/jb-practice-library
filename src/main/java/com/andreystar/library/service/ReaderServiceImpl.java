@@ -35,8 +35,8 @@ public class ReaderServiceImpl implements ReaderService {
 	}
 	
 	@Override
-	public void save(Reader employee) {
-		readerRepository.save(employee);
+	public void save(Reader reader) {
+		readerRepository.save(reader);
 	}
 	
 	@Override

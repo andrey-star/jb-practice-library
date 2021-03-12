@@ -10,7 +10,7 @@ public interface ReaderService {
 	
 	Reader findById(int id);
 	
-	void save(Reader employee);
+	void save(Reader reader);
 	
 	void deleteById(int id);
 

@@ -23,12 +23,12 @@ public class ReaderRestController {
 	}
 	
 	@GetMapping(BASE_URL)
-	public List<Reader> findAll() {
+	public List<Reader> getReaders() {
 		return readerService.findAll();
 	}
 	
 	@GetMapping(BASE_URL + "/{readerId}")
-	public Reader findById(@PathVariable int readerId) {
+	public Reader getReader(@PathVariable int readerId) {
 		Reader reader = readerService.findById(readerId);
 		if (reader == null) {
 			throw new RuntimeException("Reader id not found: " + readerId);
