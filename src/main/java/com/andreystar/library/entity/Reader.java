@@ -19,7 +19,9 @@ public class Reader {
 	@Column(name = "username")
 	private String username;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {CascadeType.DETACH, CascadeType.MERGE,
+					CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(
 			name = "books_readers",
 			joinColumns = @JoinColumn(name = "reader_id"),
