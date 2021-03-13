@@ -23,7 +23,14 @@ public class BookRestController {
 	}
 	
 	@GetMapping
-	public List<Book> getBooks() {
+	public List<Book> getBooks(@RequestParam(required = false) String isbn) {
+		if (isbn != null) {
+			Optional<Book> book = bookService.findByIsbn(isbn);
+			if (book.isEmpty()) {
+				return List.of();
+			}
+			return List.of(book.get());
+		}
 		return bookService.findAll();
 	}
 	
