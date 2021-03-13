@@ -5,6 +5,7 @@ import com.andreystar.library.entity.User;
 import com.andreystar.library.service.BookService;
 import com.andreystar.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +28,6 @@ public class UserRestController {
 		this.bookService = bookService;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping
 	public List<User> getUsers() {
 		return userService.findAll();
@@ -43,16 +43,26 @@ public class UserRestController {
 	}
 	
 	@PostMapping
-	public User addUser(@RequestBody User user) {
+	public ResponseEntity<User> addUser(@RequestBody User user) {
+		if (userExists(user)) {
+			return ResponseEntity.badRequest().build();
+		}
 		user.setId(0);
 		userService.save(user);
-		return user;
+		return ResponseEntity.ok(user);
 	}
 	
 	@PutMapping
-	public User updateUser(@RequestBody User user) {
+	public ResponseEntity<User> updateUser(@RequestBody User user) {
+		if (userExists(user)) {
+			return ResponseEntity.badRequest().build();
+		}
 		userService.save(user);
-		return user;
+		return ResponseEntity.ok(user);
+	}
+	
+	private boolean userExists(User user) {
+		return userService.findByUsername(user.getUsername()).isPresent();
 	}
 	
 	@DeleteMapping("/{userId}")

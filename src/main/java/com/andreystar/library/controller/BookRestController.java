@@ -4,6 +4,7 @@ import com.andreystar.library.entity.Book;
 import com.andreystar.library.entity.User;
 import com.andreystar.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,16 +45,26 @@ public class BookRestController {
 	}
 	
 	@PostMapping
-	public Book addBook(@RequestBody Book book) {
+	public ResponseEntity<Book> addBook(@RequestBody Book book) {
+		if (bookService.findByIsbn(book.getIsbn()).isPresent()) {
+			return ResponseEntity.badRequest().build();
+		}
 		book.setId(0);
 		bookService.save(book);
-		return book;
+		return ResponseEntity.ok(book);
 	}
 	
 	@PutMapping
-	public Book updateBook(@RequestBody Book book) {
+	public ResponseEntity<Book> updateBook(@RequestBody Book book) {
+		if (bookExists(book)) {
+			return ResponseEntity.badRequest().build();
+		}
 		bookService.save(book);
-		return book;
+		return ResponseEntity.ok(book);
+	}
+	
+	private boolean bookExists(Book book) {
+		return bookService.findByIsbn(book.getIsbn()).isPresent();
 	}
 	
 	@DeleteMapping("/{bookId}")
