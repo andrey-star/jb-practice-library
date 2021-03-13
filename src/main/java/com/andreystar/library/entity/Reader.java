@@ -4,8 +4,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "readers")
@@ -23,11 +23,11 @@ public class Reader {
 			cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(
-			name = "books_readers",
+			name = "readers_books",
 			joinColumns = @JoinColumn(name = "reader_id"),
 			inverseJoinColumns = @JoinColumn(name = "book_id")
 	)
-	private List<Book> books;
+	private Set<Book> books;
 	
 	@CreationTimestamp
 	private Instant creationTime;
@@ -48,17 +48,17 @@ public class Reader {
 		this.username = username;
 	}
 	
-	public List<Book> getBooks() {
+	public Set<Book> getBooks() {
 		return books;
 	}
 	
-	public void setBooks(List<Book> books) {
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 	
 	public void addBook(Book book) {
 		if (books == null) {
-			books = new ArrayList<>();
+			books = new HashSet<>();
 		}
 		books.add(book);
 	}

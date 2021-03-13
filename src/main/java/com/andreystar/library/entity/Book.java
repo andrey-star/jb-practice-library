@@ -1,10 +1,12 @@
 package com.andreystar.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -28,11 +30,12 @@ public class Book {
 			cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(
-			name = "books_readers",
+			name = "readers_books",
 			joinColumns = @JoinColumn(name = "book_id"),
 			inverseJoinColumns = @JoinColumn(name = "reader_id")
 	)
-	private List<Reader> readers;
+	@JsonIgnore
+	private Set<Reader> readers;
 	
 	@CreationTimestamp
 	private Instant creationTime;
@@ -69,12 +72,26 @@ public class Book {
 		this.title = title;
 	}
 	
-	public List<Reader> getReaders() {
+	public Set<Reader> getReaders() {
 		return readers;
 	}
 	
-	public void setReaders(List<Reader> readers) {
+	public void setReaders(Set<Reader> readers) {
 		this.readers = readers;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Book)) return false;
+		Book book = (Book) o;
+		return Objects.equals(isbn, book.isbn) &&
+		       Objects.equals(author, book.author) &&
+		       Objects.equals(title, book.title);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(isbn);
+	}
 }

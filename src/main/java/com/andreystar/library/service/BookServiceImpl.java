@@ -13,7 +13,7 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 	
 	@Resource
-	private BookRepository bookRepository;
+	private final BookRepository bookRepository;
 	
 	@Autowired
 	public BookServiceImpl(BookRepository bookRepository) {
@@ -27,11 +27,11 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	public Book findById(int id) {
-		Optional<Book> result = bookRepository.findById(id);
-		if (result.isPresent()) {
-			return result.get();
+		Optional<Book> book = bookRepository.findById(id);
+		if (book.isEmpty()) {
+			throw new RuntimeException("Did not find book with id: " + id);
 		}
-		throw new RuntimeException("Did not find book with id: " + id);
+		return book.get();
 	}
 	
 	@Override
