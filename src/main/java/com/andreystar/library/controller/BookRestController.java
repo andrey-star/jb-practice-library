@@ -1,6 +1,7 @@
 package com.andreystar.library.controller;
 
 import com.andreystar.library.entity.Book;
+import com.andreystar.library.entity.Reader;
 import com.andreystar.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,9 @@ public class BookRestController {
 		Book book = bookService.findById(bookId);
 		if (book == null) {
 			throw new RuntimeException("Book id not found: " + bookId);
+		}
+		for (Reader reader : book.getReaders()) {
+			reader.getBooks().remove(book);
 		}
 		bookService.deleteById(bookId);
 		return "Deleted book with id: " + bookId;
