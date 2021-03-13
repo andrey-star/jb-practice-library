@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -33,11 +34,11 @@ public class ReaderRestController {
 	
 	@GetMapping("/{readerId}")
 	public Reader getReader(@PathVariable int readerId) {
-		Reader reader = readerService.findById(readerId);
-		if (reader == null) {
+		Optional<Reader> reader = readerService.findById(readerId);
+		if (reader.isEmpty()) {
 			throw new RuntimeException("Reader id not found: " + readerId);
 		}
-		return reader;
+		return reader.get();
 	}
 	
 	@PostMapping
@@ -55,8 +56,8 @@ public class ReaderRestController {
 	
 	@DeleteMapping("/{readerId}")
 	public String deleteReader(@PathVariable int readerId) {
-		Reader reader = readerService.findById(readerId);
-		if (reader == null) {
+		Optional<Reader> reader = readerService.findById(readerId);
+		if (reader.isEmpty()) {
 			throw new RuntimeException("Reader id not found: " + readerId);
 		}
 		readerService.deleteById(readerId);
@@ -65,24 +66,25 @@ public class ReaderRestController {
 	
 	@GetMapping("/{readerId}/books")
 	public Set<Book> getBooks(@PathVariable int readerId) {
-		Reader reader = readerService.findById(readerId);
-		if (reader == null) {
+		Optional<Reader> reader = readerService.findById(readerId);
+		if (reader.isEmpty()) {
 			throw new RuntimeException("Reader id not found: " + readerId);
 		}
-		return reader.getBooks();
+		return reader.get().getBooks();
 	}
 	
 	@PutMapping("/{readerId}/books/{bookId}")
 	public Reader addBook(@PathVariable int readerId, @PathVariable int bookId) {
-		Reader reader = readerService.findById(readerId);
-		if (reader == null) {
+		Optional<Reader> readerOptional = readerService.findById(readerId);
+		if (readerOptional.isEmpty()) {
 			throw new RuntimeException("Reader id not found: " + readerId);
 		}
-		Book book = bookService.findById(bookId);
-		if (book == null) {
+		Optional<Book> book = bookService.findById(bookId);
+		if (book.isEmpty()) {
 			throw new RuntimeException("Book id not found: " + bookId);
 		}
-		reader.addBook(book);
+		Reader reader = readerOptional.get();
+		reader.addBook(book.get());
 		readerService.save(reader);
 		return reader;
 	}

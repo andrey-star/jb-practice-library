@@ -26,12 +26,8 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
-	public Book findById(int id) {
-		Optional<Book> book = bookRepository.findById(id);
-		if (book.isEmpty()) {
-			throw new RuntimeException("Did not find book with id: " + id);
-		}
-		return book.get();
+	public Optional<Book> findById(int id) {
+		return bookRepository.findById(id);
 	}
 	
 	@Override

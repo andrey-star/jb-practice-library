@@ -13,7 +13,7 @@ import java.util.Optional;
 public class ReaderServiceImpl implements ReaderService {
 	
 	@Resource
-	private ReaderRepository readerRepository;
+	private final ReaderRepository readerRepository;
 	
 	@Autowired
 	public ReaderServiceImpl(ReaderRepository readerRepository) {
@@ -26,12 +26,8 @@ public class ReaderServiceImpl implements ReaderService {
 	}
 	
 	@Override
-	public Reader findById(int id) {
-		Optional<Reader> result = readerRepository.findById(id);
-		if (result.isPresent()) {
-			return result.get();
-		}
-		throw new RuntimeException("Did not find reader with id: " + id);
+	public Optional<Reader> findById(int id) {
+		return readerRepository.findById(id);
 	}
 	
 	@Override

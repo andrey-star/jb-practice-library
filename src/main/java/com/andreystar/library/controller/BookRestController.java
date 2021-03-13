@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -28,11 +29,11 @@ public class BookRestController {
 	
 	@GetMapping("/{bookId}")
 	public Book getBook(@PathVariable int bookId) {
-		Book book = bookService.findById(bookId);
-		if (book == null) {
+		Optional<Book> book = bookService.findById(bookId);
+		if (book.isEmpty()) {
 			throw new RuntimeException("Book id not found: " + bookId);
 		}
-		return book;
+		return book.get();
 	}
 	
 	@PostMapping
@@ -50,10 +51,11 @@ public class BookRestController {
 	
 	@DeleteMapping("/{bookId}")
 	public String deleteBook(@PathVariable int bookId) {
-		Book book = bookService.findById(bookId);
-		if (book == null) {
+		Optional<Book> bookOptional = bookService.findById(bookId);
+		if (bookOptional.isEmpty()) {
 			throw new RuntimeException("Book id not found: " + bookId);
 		}
+		Book book = bookOptional.get();
 		for (Reader reader : book.getReaders()) {
 			reader.getBooks().remove(book);
 		}
