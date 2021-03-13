@@ -1,9 +1,9 @@
 package com.andreystar.library.dao;
 
-import com.andreystar.library.entity.Reader;
+import com.andreystar.library.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReaderRepository extends JpaRepository<Reader, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 }

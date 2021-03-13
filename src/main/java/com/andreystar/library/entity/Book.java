@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -31,7 +30,7 @@ public class Book {
 			cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.PERSIST, CascadeType.REFRESH})
 	@JsonIgnore
-	private Set<Reader> readers;
+	private Set<User> users;
 	
 	@Column(nullable = false, updatable = false)
 	@CreationTimestamp
@@ -69,12 +68,12 @@ public class Book {
 		this.title = title;
 	}
 	
-	public Set<Reader> getReaders() {
-		return readers;
+	public Set<User> getUsers() {
+		return users;
 	}
 	
-	public void setReaders(Set<Reader> readers) {
-		this.readers = readers;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 	
 }
