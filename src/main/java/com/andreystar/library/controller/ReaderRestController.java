@@ -1,18 +1,19 @@
 package com.andreystar.library.controller;
 
+import com.andreystar.library.entity.Book;
 import com.andreystar.library.entity.Reader;
+import com.andreystar.library.service.BookService;
 import com.andreystar.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/readers")
 public class ReaderRestController {
-	
-	private final String BASE_URL = "/readers";
 	
 	@Resource
 	private final ReaderService readerService;
@@ -22,12 +23,12 @@ public class ReaderRestController {
 		this.readerService = readerService;
 	}
 	
-	@GetMapping(BASE_URL)
+	@GetMapping
 	public List<Reader> getReaders() {
 		return readerService.findAll();
 	}
 	
-	@GetMapping(BASE_URL + "/{readerId}")
+	@GetMapping("/{readerId}")
 	public Reader getReader(@PathVariable int readerId) {
 		Reader reader = readerService.findById(readerId);
 		if (reader == null) {
@@ -36,20 +37,20 @@ public class ReaderRestController {
 		return reader;
 	}
 	
-	@PostMapping(BASE_URL)
+	@PostMapping
 	public Reader addReader(@RequestBody Reader reader) {
 		reader.setId(0);
 		readerService.save(reader);
 		return reader;
 	}
 	
-	@PutMapping(BASE_URL)
+	@PutMapping
 	public Reader updateReader(@RequestBody Reader reader) {
 		readerService.save(reader);
 		return reader;
 	}
 	
-	@DeleteMapping(BASE_URL + "/{readerId}")
+	@DeleteMapping("/{readerId}")
 	public String deleteReader(@PathVariable int readerId) {
 		Reader reader = readerService.findById(readerId);
 		if (reader == null) {

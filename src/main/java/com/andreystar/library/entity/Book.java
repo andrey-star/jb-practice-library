@@ -17,26 +17,23 @@ public class Book {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "isbn")
+	@Column(name = "isbn", nullable = false)
 	private String isbn;
 	
-	@Column(name = "author")
+	@Column(name = "author", nullable = false)
 	private String author;
 	
-	@Column(name = "title")
+	@Column(name = "title", nullable = false)
 	private String title;
 	
-	@ManyToMany(fetch = FetchType.LAZY,
+	@ManyToMany(mappedBy = "books",
+			fetch = FetchType.LAZY,
 			cascade = {CascadeType.DETACH, CascadeType.MERGE,
 					CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinTable(
-			name = "readers_books",
-			joinColumns = @JoinColumn(name = "book_id"),
-			inverseJoinColumns = @JoinColumn(name = "reader_id")
-	)
 	@JsonIgnore
 	private Set<Reader> readers;
 	
+	@Column(nullable = false, updatable = false)
 	@CreationTimestamp
 	private Instant creationTime;
 	
@@ -80,18 +77,4 @@ public class Book {
 		this.readers = readers;
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Book)) return false;
-		Book book = (Book) o;
-		return Objects.equals(isbn, book.isbn) &&
-		       Objects.equals(author, book.author) &&
-		       Objects.equals(title, book.title);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(isbn);
-	}
 }

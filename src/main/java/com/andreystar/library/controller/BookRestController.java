@@ -9,10 +9,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/books")
 public class BookRestController {
-	
-	private final String BASE_URL = "/books";
 	
 	@Resource
 	private final BookService bookService;
@@ -22,12 +20,12 @@ public class BookRestController {
 		this.bookService = bookService;
 	}
 	
-	@GetMapping(BASE_URL)
+	@GetMapping
 	public List<Book> getBooks() {
 		return bookService.findAll();
 	}
 	
-	@GetMapping(BASE_URL + "/{bookId}")
+	@GetMapping("/{bookId}")
 	public Book getBook(@PathVariable int bookId) {
 		Book book = bookService.findById(bookId);
 		if (book == null) {
@@ -36,20 +34,20 @@ public class BookRestController {
 		return book;
 	}
 	
-	@PostMapping(BASE_URL)
+	@PostMapping
 	public Book addBook(@RequestBody Book book) {
 		book.setId(0);
 		bookService.save(book);
 		return book;
 	}
 	
-	@PutMapping(BASE_URL)
+	@PutMapping
 	public Book updateBook(@RequestBody Book book) {
 		bookService.save(book);
 		return book;
 	}
 	
-	@DeleteMapping(BASE_URL + "/{bookId}")
+	@DeleteMapping("/{bookId}")
 	public String deleteBook(@PathVariable int bookId) {
 		Book book = bookService.findById(bookId);
 		if (book == null) {

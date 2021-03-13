@@ -16,7 +16,7 @@ public class Reader {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "username")
+	@Column(name = "username", nullable = false)
 	private String username;
 	
 	@ManyToMany(fetch = FetchType.LAZY,
@@ -29,6 +29,7 @@ public class Reader {
 	)
 	private Set<Book> books;
 	
+	@Column(nullable = false, updatable = false)
 	@CreationTimestamp
 	private Instant creationTime;
 	
