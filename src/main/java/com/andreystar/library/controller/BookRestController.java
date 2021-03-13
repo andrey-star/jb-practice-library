@@ -25,7 +25,7 @@ public class BookRestController {
 	
 	@GetMapping
 	public List<Book> getBooks(@RequestParam(required = false) String isbn) {
-		if (isbn != null) {
+		if (isbn != null && !isbn.isEmpty()) {
 			Optional<Book> book = bookService.findByIsbn(isbn);
 			if (book.isEmpty()) {
 				return List.of();

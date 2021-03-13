@@ -27,6 +27,7 @@ public class User {
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "book_id")
 	)
+	@OrderBy(value = "title ASC")
 	private Set<Book> books;
 	
 	@Column(nullable = false, updatable = false)
