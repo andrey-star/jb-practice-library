@@ -9,11 +9,11 @@
 ### API:
 * Users
   * `GET` [/api/users](https://jb-library-andreystar.herokuapp.com/api/users)
-  * `GET` [/api/users/<user-id>](https://jb-library-andreystar.herokuapp.com/api/users/2)
+  * `GET` [/api/users/\<user-id\>](https://jb-library-andreystar.herokuapp.com/api/users/2)
 
 * Books
     * `GET` [/api/books](https://jb-library-andreystar.herokuapp.com/api/books)
-    * `GET` [/api/books/<book-id>](https://jb-library-andreystar.herokuapp.com/api/books/6)
+    * `GET` [/api/books/\<book-id\>](https://jb-library-andreystar.herokuapp.com/api/books/6)
 
 
 * `POST` create user/book
