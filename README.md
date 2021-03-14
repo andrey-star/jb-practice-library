@@ -4,7 +4,7 @@
 
 * Spring backed REST API with PostgreSQL database
 * Angular frontend
-* Hosted on Heroku.
+* Hosted on Heroku
 
 ### API:
 * Users
