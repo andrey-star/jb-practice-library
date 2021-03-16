@@ -44,7 +44,7 @@ public class UserRestController {
 	
 	@PostMapping
 	public ResponseEntity<User> addUser(@RequestBody User user) {
-		if (userExists(user)) {
+		if (user.getUsername() == null || user.getUsername().isEmpty() || userExists(user)) {
 			return ResponseEntity.badRequest().build();
 		}
 		user.setId(0);
