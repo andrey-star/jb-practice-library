@@ -1,0 +1,17 @@
+<a mat-raised-button [routerLink]="['/']">Home</a>
+<form (ngSubmit)="onSubmit()" class="add-book-form">
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Author</mat-label>
+    <input matInput type="text" name="author" [(ngModel)]="author">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput type="text" name="title" [(ngModel)]="title">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>ISBN</mat-label>
+    <input matInput type="text" name="isbn" [(ngModel)]="isbn">
+  </mat-form-field>
+  <button class="add-book-button" color="primary" mat-flat-button type="submit">Add Book</button>
+</form>

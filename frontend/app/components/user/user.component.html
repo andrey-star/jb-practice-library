@@ -1,0 +1,20 @@
+<a mat-raised-button [routerLink]="['/']">Home</a>
+<div *ngIf="!loading && !error">
+  <br>
+  <h1>{{user.username}}'s Library</h1>
+  <p *ngIf="user.books.length == 0"><i>Library is empty</i></p>
+  <app-books *ngIf="user.books.length > 0" [books]="user.books"></app-books>
+  <br>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>ISBN</mat-label>
+      <input matInput type="text" name="isbn" [(ngModel)]="addIsbn">
+    </mat-form-field>
+    <button class="add-book-button" mat-flat-button type="submit">Add Book</button>
+  </form>
+  <br>
+  <button mat-raised-button color="warn" (click)="onDelete()" name="Delete">Delete User</button>
+</div>
+<div *ngIf="error">
+  <p>Error occurred while fetching data</p>
+</div>

@@ -1,0 +1,21 @@
+<a mat-raised-button [routerLink]="['/']">Home</a>
+<div *ngIf="!loading && !error">
+  <br>
+  <mat-card class="book-card">
+    <h1>{{book.author}} - <i>"{{book.title}}"</i></h1>
+    <h4>ISBN: {{book.isbn}}</h4>
+  </mat-card>
+  <br>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>ISBN</mat-label>
+      <input matInput type="text" name="isbn" [(ngModel)]="changeIsbn">
+    </mat-form-field>
+    <button class="update-isbn-button" color="primary" mat-flat-button type="submit">Update ISBN</button>
+  </form>
+  <br>
+  <button mat-raised-button color="warn" (click)="onDelete()" name="Delete">Delete Book</button>
+</div>
+<div *ngIf="error">
+  <p>Error occurred while fetching data</p>
+</div>

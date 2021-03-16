@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <div>
+    <app-users [users]="users"></app-users>
+    <br>
+    <app-add-user (addUser)="addUser($event)"></app-add-user>
+  </div>
+  <div>
+    <app-books [books]="books"></app-books>
+    <br>
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>ISBN</mat-label>
+        <input matInput type="text" name="isbn" [(ngModel)]="searchIsbn">
+      </mat-form-field>
+      <button class="search-isbn-button" color="primary" mat-flat-button type="submit">Search by ISBN</button>
+    </form>
+    <p>or</p>
+    <a mat-raised-button color="primary" [routerLink]="['/add-book']">Add Book</a>
+  </div>
+</div>
+
+
+
