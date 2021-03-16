@@ -2,9 +2,13 @@
 
 [jb-library-andreystar.herokuapp.com](https://jb-library-andreystar.herokuapp.com)
 
+![image](https://user-images.githubusercontent.com/35143083/111378141-847cbc80-86b2-11eb-92c9-86f436e97ff3.png)
+
+
 * Spring backed REST API with PostgreSQL database
 * Angular frontend
 * Hosted on Heroku
+* Material UI
 
 ### API:
 * Users
